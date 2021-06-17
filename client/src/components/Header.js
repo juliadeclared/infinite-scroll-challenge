@@ -56,6 +56,21 @@ const logoVariants = {
   },
 };
 
+const searchVariants = {
+  hidden: {
+    opacity: 0,
+    x: '100vh',
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: 'spring',
+      delay: 1
+    },
+  },
+};
+
 export default function Header({ setSearchTerm }) {
   const classes = useStyles();
   const searchRef = useRef();
@@ -71,23 +86,32 @@ export default function Header({ setSearchTerm }) {
             animate="visible"
             alt="logo"
             className="logo"
+            onClick={() => window.location.reload()}
           />
         </div>
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <Search />
+
+        <motion.div
+          variants={searchVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <Search />
+            </div>
+
+            <InputBase
+              placeholder="Search…"
+              inputRef={searchRef}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+              onChange={() => setSearchTerm(searchRef.current.value)}
+            />
           </div>
-          <InputBase
-            placeholder="Search…"
-            inputRef={searchRef}
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-            onChange={() => setSearchTerm(searchRef.current.value)}
-          />
-        </div>
+        </motion.div>
       </Toolbar>
     </div>
   );

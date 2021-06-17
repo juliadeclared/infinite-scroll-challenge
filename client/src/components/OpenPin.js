@@ -13,18 +13,26 @@ import {
   IconButton,
 } from '@material-ui/core';
 
-import { Favorite, Share, ExpandMore, MoreVert } from '@material-ui/icons';
+import {
+  Favorite,
+  OpenInBrowserRounded,
+  ExpandMore,
+  CloseRounded,
+} from '@material-ui/icons';
 
 import Cursor from './Cursor';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 450,
-    borderRadius: '8%',
+    borderRadius: '24px',
+    overflow: 'scroll',
   },
   media: {
     minWidth: 450,
-    paddingTop: '56.25%', // 16:9
+    minHeight: 200,
+    paddingTop: '56.25%',
+    overflow: 'scroll',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -32,12 +40,22 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
+    overflow: 'scroll',
   },
   expandOpen: {
     transform: 'rotate(180deg)',
+    overflow: 'scroll',
   },
   avatar: {
     backgroundColor: '#222',
+  },
+  iconContainer: {
+    '&:hover $icon': {
+      color: '#1db954',
+    },
+  },
+  icon: {
+    color: 'default',
   },
 }));
 
@@ -50,93 +68,84 @@ export default function OpenPin({ pin, show, setShow }) {
   };
 
   return (
-      <Modal
-        open={show}
-        onBackdropClick={() => setShow(!show)}
-        style={{
-          backgroundColor: 'transparent',
-          border: 'none',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: '8%',
-        }}
-      >
-        <Card className={classes.root}>
-          <Cursor />;
-          <CardHeader
-            avatar={
-              <Avatar aria-label="pin" className={classes.avatar}>
-                {pin.pinner.full_name[0]}
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVert />
-              </IconButton>
-            }
-            title={pin.pinner.full_name}
-            subheader="September 14, 2016"
-          />
-          <CardMedia
-            className={classes.media}
-            image={pin.images.orig.url}
-            title={pin.title}
-          />
-          <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {pin.description}
-            </Typography>
-          </CardContent>
-          <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <Favorite />
-            </IconButton>
-            <IconButton aria-label="share">
-              <Share />
-            </IconButton>
+    <Modal
+      open={show}
+      onBackdropClick={() => setShow(!show)}
+      style={{
+        backgroundColor: 'transparent',
+        border: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '8%',
+      }}
+    >
+      <Card className={classes.root}>
+        <Cursor />;
+        <CardHeader
+          avatar={
+            <Avatar aria-label="pin" className={classes.avatar}>
+              {pin.pinner.full_name[0]}
+            </Avatar>
+          }
+          action={
             <IconButton
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
+              aria-label="settings"
+              classes={{
+                root: classes.iconContainer,
+              }}
+              onClick={() => setShow(!show)}
             >
-              <ExpandMore />
+              <CloseRounded className={classes.icon} />
             </IconButton>
-          </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Method:</Typography>
-              <Typography paragraph>
-                Heat 1/2 cup of the broth in a pot until simmering, add saffron
-                and set aside for 10 minutes.
+          }
+          title={pin.pinner.full_name}
+          subheader="September 14, 2016"
+        />
+        <CardMedia
+          className={classes.media}
+          image={pin.images.orig.url}
+          title={pin.title}
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {pin.description}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton
+            aria-label="like"
+            classes={{
+              root: classes.iconContainer,
+            }}
+          >
+            <Favorite className={classes.icon} />
+          </IconButton>
+          <Typography>{pin.like_count}</Typography>
+
+          <IconButton
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show comments"
+            disabled={pin.comment_count === 0}
+            classes={{
+              root: classes.iconContainer,
+            }}
+          >
+            <ExpandMore className={classes.icon} />
+          </IconButton>
+          <Typography>{pin.comment_count} Comments </Typography>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            {pin.comments.data.map((comment) => (
+              <Typography paragraph key={comment.id}>
+                {comment.text}
               </Typography>
-              <Typography paragraph>
-                Heat oil in a (14- to 16-inch) paella pan or a large, deep
-                skillet over medium-high heat. Add chicken, shrimp and chorizo,
-                and cook, stirring occasionally until lightly browned, 6 to 8
-                minutes. Transfer shrimp to a large plate and set aside, leaving
-                chicken and chorizo in the pan. Add pimentón, bay leaves,
-                garlic, tomatoes, onion, salt and pepper, and cook, stirring
-                often until thickened and fragrant, about 10 minutes. Add
-                saffron broth and remaining 4 1/2 cups chicken broth; bring to a
-                boil.
-              </Typography>
-              <Typography paragraph>
-                Add rice and stir very gently to distribute. Top with artichokes
-                and peppers, and cook without stirring, until most of the liquid
-                is absorbed, 15 to 18 minutes. Reduce heat to medium-low, add
-                reserved shrimp and mussels, tucking them down into the rice,
-                and cook again without stirring, until mussels have opened and
-                rice is just tender, 5 to 7 minutes more. (Discard any mussels
-                that don’t open.)
-              </Typography>
-              <Typography>
-                Set aside off of the heat to let rest for 10 minutes, and then
-                serve.
-              </Typography>
-            </CardContent>
-          </Collapse>
-        </Card>
-      </Modal>
+            ))}
+          </CardContent>
+        </Collapse>
+      </Card>
+    </Modal>
   );
 }

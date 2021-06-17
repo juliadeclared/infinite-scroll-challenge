@@ -74,10 +74,12 @@ code {
 }
 
 .header {
+  position: sticky;
   max-width: 70rem;
   margin: 2rem auto;
   text-align: center;
   color: white;
+  z-index: 6;
 }
 
 .logo {
@@ -116,5 +118,14 @@ code {
   border-radius: 100%;
   transform: translate(-50%, -50%);
   z-index: 999;
+  pointer-events: none;
+}
+
+.fade-component {
+  position: absolute;
+  height: 200%;
+  width: 100%;
+  z-index: 5;
+  background-image: linear-gradient(transparent, #191414, transparent);
   pointer-events: none;
 }

@@ -1,0 +1,31 @@
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
+export default function HomePageFade() {
+  const [previousYPosition, setPreviousYPosition] = useState(0);
+  const [startFade, setStartFade] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentYposition = window.scrollY;
+      const isScrollingDown = currentYposition > previousYPosition;
+
+      setStartFade(isScrollingDown)
+      setPreviousYPosition(currentYposition)
+    };
+    window.addEventListener('scroll', handleScroll, false);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll, false);
+    };
+  }, [previousYPosition]);
+
+  return (
+    <motion.div
+      className="fade-component"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: startFade ? 0 : 1 }}
+      transition={{ opacity: { duration: 0.35 } }}
+    ></motion.div>
+  );
+}

@@ -9,6 +9,7 @@ import Loader from './components/Loader';
 import Header from './components/Header';
 import Pin from './components/Pin';
 import OpenPin from './components/OpenPin';
+import HomePageFade from './components/HomePageFade';
 
 function App() {
   const [pins, setPins] = useState([]);
@@ -20,11 +21,11 @@ function App() {
     try {
       const { data } = await axios.get(`/api/pins/${searchTerm}`);
 
+      // if there is a search, only populate page with searched images, and remove all others
       if (searchTerm.length) {
         setPins(data);
       } else setPins([...pins, ...data]);
 
-      console.log(data);
     } catch (error) {
       console.log('Error getting pins!', error);
     }
@@ -39,11 +40,10 @@ function App() {
     getData();
   }, [searchTerm]);
 
-  console.log(selectedPin);
-
   return (
     <>
       <Cursor />
+      <HomePageFade />
       <Header setSearchTerm={setSearchTerm} />
       {selectedPin && (
         <OpenPin pin={selectedPin} show={showModal} setShow={setShowModal} />

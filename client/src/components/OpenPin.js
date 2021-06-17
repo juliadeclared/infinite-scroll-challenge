@@ -13,20 +13,27 @@ import {
   IconButton,
 } from '@material-ui/core';
 
-import {
-  Favorite,
-  OpenInBrowserRounded,
-  ExpandMore,
-  CloseRounded,
-} from '@material-ui/icons';
+import { Favorite, ExpandMore, CloseRounded } from '@material-ui/icons';
 
 import Cursor from './Cursor';
+import Comments from './Comments';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 450,
     borderRadius: '24px',
     overflow: 'scroll',
+  },
+  modalStyle: {
+    top: '10%',
+    left: '10%',
+    overflow: 'scroll',
+    height: '100%',
+    border: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '8%',
   },
   media: {
     minWidth: 450,
@@ -57,28 +64,34 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     color: 'default',
   },
+  likedIcon: {
+    color: '#1db954',
+  },
 }));
 
 export default function OpenPin({ pin, show, setShow }) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
+  const [liked, setLiked] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const handleLikeClick = () => {
+    setLiked(!liked);
+  };
+
+  const handleModalClose = () => {
+    setShow(!show);
+    setLiked(false);
+  };
+
   return (
     <Modal
       open={show}
-      onBackdropClick={() => setShow(!show)}
-      style={{
-        backgroundColor: 'transparent',
-        border: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '8%',
-      }}
+      onBackdropClick={() => handleModalClose()}
+      className={classes.modalStyle}
     >
       <Card className={classes.root}>
         <Cursor />;
@@ -90,7 +103,7 @@ export default function OpenPin({ pin, show, setShow }) {
           }
           action={
             <IconButton
-              aria-label="settings"
+              aria-label="close"
               classes={{
                 root: classes.iconContainer,
               }}
@@ -118,10 +131,11 @@ export default function OpenPin({ pin, show, setShow }) {
             classes={{
               root: classes.iconContainer,
             }}
+            onClick={() => handleLikeClick()}
           >
-            <Favorite className={classes.icon} />
+            <Favorite className={liked ? classes.likedIcon : classes.icon} />
           </IconButton>
-          <Typography>{pin.like_count}</Typography>
+          <Typography>{liked ? pin.like_count + 1 : pin.like_count}</Typography>
 
           <IconButton
             onClick={handleExpandClick}
@@ -138,11 +152,7 @@ export default function OpenPin({ pin, show, setShow }) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            {pin.comments.data.map((comment) => (
-              <Typography paragraph key={comment.id}>
-                {comment.text}
-              </Typography>
-            ))}
+            <Comments comments={pin.comments.data} />
           </CardContent>
         </Collapse>
       </Card>

@@ -11,10 +11,26 @@ app.use(express.urlencoded());
 app.get('/api/pins', async (req, res) => {
   try {
     let pins = JSON.parse(data);
-    
+
     let randomIndex = Math.floor(Math.random() * (pins.length - 5));
 
     res.status(200).send(pins.slice(randomIndex, randomIndex + 5));
+  } catch (error) {
+    console.log('Error getting pins data', error);
+  }
+});
+
+app.get('/api/pins/:term', async (req, res) => {
+  try {
+    let pins = JSON.parse(data);
+    let filtered = pins.filter((pin) => {
+      let str = JSON.stringify(pin.description)
+      return str.includes(req.params.term);
+    });
+
+    let randomIndex = Math.floor(Math.random() * (filtered.length - 5));
+
+    res.status(200).send(filtered.slice(randomIndex, randomIndex + 5));
   } catch (error) {
     console.log('Error getting pins data', error);
   }

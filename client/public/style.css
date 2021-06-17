@@ -3,7 +3,7 @@
 }
 
 *:focus {
-    outline: none;
+  outline: none;
 }
 
 body {
@@ -61,6 +61,7 @@ code {
   border-radius: 24px;
   opacity: 95%;
   padding: 6px;
+  filter: saturate(-0.5);
 }
 
 .pin:hover {

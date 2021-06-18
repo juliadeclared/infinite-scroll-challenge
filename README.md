@@ -10,6 +10,7 @@ Includes a simple Express server, and a React frontend.
 
 ### Dependencies
 
+- nodemon
 - Material UI
 - Framer Motion
 - Express

@@ -85,6 +85,7 @@ export default function OpenPin({ pin, show, setShow }) {
   const handleModalClose = () => {
     setShow(!show);
     setLiked(false);
+    setExpanded(false)
   };
 
   return (

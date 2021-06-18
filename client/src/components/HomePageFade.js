@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import DownArrow from './DownArrow';
 
 export default function HomePageFade() {
-  const [previousYPosition, setPreviousYPosition] = useState(0);
+  const [previousYPosition] = useState(0);
   const [startFade, setStartFade] = useState(false);
 
   useEffect(() => {
@@ -12,8 +12,7 @@ export default function HomePageFade() {
       const currentYposition = window.scrollY;
       const isScrollingDown = currentYposition > previousYPosition;
 
-      setStartFade(isScrollingDown)
-      setPreviousYPosition(currentYposition)
+      setStartFade(isScrollingDown);
     };
     window.addEventListener('scroll', handleScroll, false);
 

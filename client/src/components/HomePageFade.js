@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+import DownArrow from './DownArrow';
+
 export default function HomePageFade() {
   const [previousYPosition, setPreviousYPosition] = useState(0);
   const [startFade, setStartFade] = useState(false);
@@ -26,6 +28,8 @@ export default function HomePageFade() {
       initial={{ opacity: 0 }}
       animate={{ opacity: startFade ? 0 : 1 }}
       transition={{ opacity: { duration: 0.35 } }}
-    ></motion.div>
+    >
+      <DownArrow />
+    </motion.div>
   );
 }

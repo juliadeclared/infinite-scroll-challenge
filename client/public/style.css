@@ -129,3 +129,15 @@ code {
   background-image: linear-gradient(transparent, #191414, transparent);
   pointer-events: none;
 }
+
+.arrow-circle {
+  background-color: #1db954;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  text-align: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 5%;
+  left: 45%
+}

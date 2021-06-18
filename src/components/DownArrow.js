@@ -9,12 +9,12 @@ export default function DownArrow() {
       className="arrow-circle"
       initial={{ y: 8 }}
       animate={{ y: 0 }}
-      transition={{ yoyo: Infinity, duration: 1.5 }}
+      transition={{ repeatType: "mirror", repeat: Infinity, duration: 1.5 }}
     >
       <motion.div
         initial={{ y: 8 }}
         animate={{ y: 0 }}
-        transition={{ yoyo: Infinity, duration: 1.48 }}
+        transition={{ repeatType: "mirror", repeat: Infinity, duration: 1.48 }}
       >
         <ExpandMore style={{ fontSize: 60 }} />
       </motion.div>

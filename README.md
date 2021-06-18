@@ -5,6 +5,7 @@ Implementing Pinterest-style infinite scroll.
 ## Description
 
 Includes a simple Express server, and a React frontend.
+[Deployed site](https://infinite-scroll-707fd.web.app/)
 
 ## Getting Started
 
@@ -19,17 +20,22 @@ Includes a simple Express server, and a React frontend.
 ### Installing
 
 - First install dependencies in the root directory
-- Then cd into client and install dependencies again
 
 ```
 yarn
+
+```
+
+- Then cd into server and install dependencies again
+
+```
 cd client
 yarn
 ```
 
 ### Executing program
 
-- Run
+- From the root directory, run
 
 ```
 yarn dev

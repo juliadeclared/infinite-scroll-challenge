@@ -25,7 +25,15 @@ function App() {
       if (searchTerm.length) {
         setPins(data);
       } else setPins([...pins, ...data]);
+    } catch (error) {
+      console.log('Error getting pins!', error);
+    }
+  };
 
+  const getFirstData = async () => {
+    try {
+      const { data } = await axios.get(`/api/pins/`);
+      setPins(data);
     } catch (error) {
       console.log('Error getting pins!', error);
     }
@@ -37,7 +45,9 @@ function App() {
   };
 
   useEffect(() => {
-    getData();
+    getFirstData();
+
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   return (
@@ -74,12 +84,14 @@ function App() {
           </GridList>
         </InfiniteScroll>
       ) : (
-        <Typography
-          variant="h3"
-          style={{ color: 'white', textAlign: 'center' }}
-        >
-          All out of kittens!
-        </Typography>
+        searchTerm.length && (
+          <Typography
+            variant="h3"
+            style={{ color: 'white', textAlign: 'center' }}
+          >
+            All out of kittens!
+          </Typography>
+        )
       )}
     </>
   );

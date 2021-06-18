@@ -7,7 +7,7 @@ Implementing Pinterest-style infinite scroll.
 Includes a simple Express server, and a React frontend.
 [Video Demo](https://youtu.be/K8FRpNAqhB8)
 
-![Top of page fade effect](/public/public/TopPageFade.png?raw=true "top of page")
+![Top of page fade effect](public/TopPageFade.png?raw=true "top of page")
 
 ![open pin](public/OpenPin.png?raw=true "open pin")
 

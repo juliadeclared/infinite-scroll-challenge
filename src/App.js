@@ -48,6 +48,12 @@ function App() {
     getFirstData();
 
     // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    getData();
+
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   return (

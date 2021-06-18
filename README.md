@@ -5,7 +5,15 @@ Implementing Pinterest-style infinite scroll.
 ## Description
 
 Includes a simple Express server, and a React frontend.
-[Deployed site](https://infinite-scroll-707fd.web.app/)
+[Video Demo](https://youtu.be/K8FRpNAqhB8)
+
+![Top of page fade effect](/public/public/TopPageFade.png?raw=true "top of page")
+
+![open pin](public/OpenPin.png?raw=true "open pin")
+
+![Expanded comments](public/ExpandedComments.png?raw=true "Expanded comments")
+
+![Search](public/Search.png?raw=true "Search")
 
 ## Getting Started
 
